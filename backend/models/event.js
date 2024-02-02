@@ -1,23 +1,19 @@
 const mongoose = require("mongoose");
 
+const { User } = require("../models/index");
+
 const EventSchema = new mongoose.Schema(
   {
     name: {
       type: String,
       required: true,
     },
-    event_poster: {
+
+    image: {
       type: String,
-      required: true,
+      required: false,
     },
-    event_pic: {
-      type: String,
-      required: true,
-    },
-    sheetID: {
-      type: Number,
-      default: 0,
-    },
+
     description: {
       type: String,
       required: true,
@@ -26,10 +22,10 @@ const EventSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    category: {
-      type: String,
-      required: true,
-    },
+    // category: {
+    //   type: String,
+    //   required: true,
+    // },
     featured: {
       type: Boolean,
       default: false,
@@ -50,13 +46,18 @@ const EventSchema = new mongoose.Schema(
       type: Date,
       required: true,
     },
-    organizers: [Object],
-    hosts: [Object],
-    sponsors: [Object],
+    location: {
+      type: String,
+      required: true,
+    },
+    organizer: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+    },
     participants: [
       {
         type: mongoose.Schema.Types.ObjectId,
-        ref: "Participant",
+        ref: "User",
       },
     ],
   },
