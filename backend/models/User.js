@@ -1,6 +1,8 @@
 const mongoose = require("mongoose");
 const slugify = require("slugify");
 const uniqueSlug = require("unique-slug");
+const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
 
 const userSchema = new mongoose.Schema({
   name: {
@@ -9,7 +11,6 @@ const userSchema = new mongoose.Schema({
   },
   slug: {
     type: String,
-    required: [true, "Slug is required"],
   },
   email: {
     type: String,
@@ -17,21 +18,28 @@ const userSchema = new mongoose.Schema({
     trim: true,
     required: [true, "Email is required"],
   },
-  phoneNumber: {
-    type: Number,
-    unique: [true, "Phone Number must be unique"],
-  },
   password: {
     type: String,
     required: [true, "Password is required"],
   },
-  profileImage: {
+  image: {
     type: String,
     default: null,
   },
+  role: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Role",
+    required: [true, "Role is required"],
+  },
 });
+
 userSchema.pre("save", async function (next) {
   this.slug = await slugify(`${this.name}-${uniqueSlug()}`, { lower: true });
+  //hash password
+  this.password = await bcrypt.hash(
+    this.password,
+    Number(process.env.SALT) || 10
+  );
   next();
 });
 
@@ -82,6 +90,5 @@ userSchema.methods.hashPassword = async function (password) {
   const salt = await bcrypt.genSalt(parseInt(process.env.SALT_ROUND) || 12);
   return await bcrypt.hash(password, salt);
 };
-
 const UserModel = mongoose.model("User", userSchema);
 module.exports = UserModel;

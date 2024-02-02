@@ -16,23 +16,26 @@ const port = process.env.PORT || 5000;
 //Cors
 app.use(cors());
 
+// Serving Static files
+app.use(express.static("uploads"));
+
 //Parsing form
 app.use(express.json({ limit: "50mb" }));
 app.use(express.urlencoded({ extended: true, limit: "50mb" }));
 
-app.all("/", (req, res) => {
-  res.send("Hello my this World!");
-});
 //Routing
 require("./routes/api")(app);
-
-//Error handling
-// expressAsyncErrors();
 
 //Database connection
 try {
   dbConnection();
   console.log("Database connection established sucessfully");
+
+  // Adding default admin
+  require("./utils/defaultAdmin")();
+
+  // Check if the uplods folder alerady exists or not
+  require("./utils/helper").checkFolder();
 
   //Start the server
   app.listen(port, () =>
