@@ -4,9 +4,9 @@ const { Event } = require("../models/index");
 
 // TO GET ALL Events
 module.exports.getAll = async (req, res) => {
-  //   const { brand } = req.query;
+  //   const { search } = req.query;
   //   const queryParam = {};
-  //   if (brand) queryParam.brand = brand;
+  //   if (search) queryParam.name = search;
 
   const event = await Event.find().sort("-createdAt");
   // .populate("brand", "brand");
@@ -24,7 +24,9 @@ module.exports.getOne = async (req, res) => {
 // TO CREATE Event
 module.exports.createEvent = async (req, res) => {
   req.body.organizer = req.user.id;
-  //   if (file) req.body.image = file.filename;
+  if (req.file) {
+    req.body.image = req.file.filename;
+  }
   const event = await Event.create(req.body);
   return res.json({ status: true, event, msg: "Event created successfully" });
 };
@@ -44,6 +46,9 @@ module.exports.updateEvent = async (req, res) => {
       status: false,
       msg: "You are not authorized to update this event",
     });
+  }
+  if (req.file) {
+    req.body.image = req.file.filename;
   }
   event = await Event.findByIdAndUpdate(req.params.id, req.body);
   return res.json({ status: true, event, msg: "Event updated successfully" });

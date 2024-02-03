@@ -1,93 +1,63 @@
 // import '@styles/navbar.css';
+import { AuthContext } from "../../App";
+import React from "react";
+import {
+  Avatar,
+  Dropdown,
+  DropdownDivider,
+  DropdownHeader,
+  DropdownItem,
+  Navbar,
+  NavbarBrand,
+  NavbarCollapse,
+  NavbarLink,
+  NavbarToggle,
+} from "flowbite-react";
+
 const NavbarC = () => {
+  const context = React.useContext(AuthContext);
+  console.log(context);
   return (
-    <>
-      <div className="navbar bg-base-100">
-        <div className="navbar-start">
-          <div className="dropdown">
-            <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-5 w-5"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M4 6h16M4 12h8m-8 6h16"
-                />
-              </svg>
-            </div>
-            <ul
-              tabIndex={0}
-              className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52"
-            >
-              <li>
-                <a>Item 1</a>
-              </li>
-              <li>
-                <a>Parent</a>
-                <ul className="p-2">
-                  <li>
-                    <a>Submenu 1</a>
-                  </li>
-                  <li>
-                    <a>Submenu 2</a>
-                  </li>
-                </ul>
-              </li>
-              <li>
-                <a>Item 3</a>
-              </li>
-            </ul>
-          </div>
-          <a className="btn btn-ghost text-xl">daisyUI</a>
-        </div>
-        <div className="navbar-center hidden lg:flex">
-          <ul className="menu menu-horizontal px-1">
-            <li>
-              <a>Item 1</a>
-            </li>
-            <li>
-              {/* <details>
-                <summary>Parent</summary>
-                <ul className="p-2">
-                  <li>
-                    <a>Submenu 1</a>
-                  </li>
-                  <li>
-                    <a>Submenu 2</a>
-                  </li>
-                </ul>
-              </details> */}
-              <div className="dropdown dropdown-hover">
-                <div tabIndex={0}>Hover</div>
-                <ul
-                  tabIndex={0}
-                  className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52"
-                >
-                  <li>
-                    <a>Item 1</a>
-                  </li>
-                  <li>
-                    <a>Item 2</a>
-                  </li>
-                </ul>
-              </div>
-            </li>
-            <li>
-              <a>Item 3</a>
-            </li>
-          </ul>
-        </div>
-        <div className="navbar-end">
-          <a className="btn">Button</a>
-        </div>
+    <Navbar fluid rounded>
+      <NavbarBrand href="https://flowbite-react.com">
+        <span className="self-center whitespace-nowrap text-xl font-semibold dark:text-white">
+          EventHub
+        </span>
+      </NavbarBrand>
+      <div className="flex md:order-2">
+        <Dropdown
+          arrowIcon={false}
+          inline
+          label={
+            <Avatar
+              alt="User settings"
+              img="https://flowbite.com/docs/images/people/profile-picture-5.jpg"
+              rounded
+            />
+          }
+        >
+          <DropdownHeader>
+            <span className="block text-sm">Bonnie Green</span>
+            <span className="block truncate text-sm font-medium">
+              name@flowbite.com
+            </span>
+          </DropdownHeader>
+          <DropdownItem>Dashboard</DropdownItem>
+          <DropdownDivider />
+          <DropdownItem>Sign out</DropdownItem>
+        </Dropdown>
+        <NavbarToggle />
       </div>
-    </>
+      <NavbarCollapse>
+        <NavbarLink href="#" active>
+          Home
+        </NavbarLink>
+        <NavbarLink href="#">About</NavbarLink>
+        <NavbarLink href="#">Services</NavbarLink>
+        <NavbarLink href="#">Pricing</NavbarLink>
+        <NavbarLink href="#">Contact</NavbarLink>
+      </NavbarCollapse>
+    </Navbar>
   );
 };
 

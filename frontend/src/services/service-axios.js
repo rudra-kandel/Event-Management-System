@@ -1,4 +1,4 @@
-import { Axios } from "axios";
+import Axios from "axios";
 import tokenService from "./service-token";
 
 //Timeout as 3 minutes
@@ -22,3 +22,5 @@ httpClient.interceptors.request.use(async (config) => {
   }
   return config;
 });
+
+export default httpClient;

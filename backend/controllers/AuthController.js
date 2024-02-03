@@ -6,6 +6,8 @@ const authService = require("../services/AuthService");
 
 // TO REGISTER USER
 module.exports.register = async (req, res) => {
+  console.log(req.file);
+  console.log(req.body);
   await authService.registerUser(req.body, req.file);
   return res.json({
     status: true,

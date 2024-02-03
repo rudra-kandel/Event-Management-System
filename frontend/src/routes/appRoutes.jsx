@@ -1,10 +1,11 @@
-import { Suspense, lazy } from 'react';
-import { ErrorBoundary } from 'react-error-boundary';
-import { useRoutes } from 'react-router-dom';
-import { navigationRoutes } from './routes-constants';
-import Home from '@pages/Home/home';
+import { Suspense, lazy } from "react";
+import { ErrorBoundary } from "react-error-boundary";
+import { useRoutes } from "react-router-dom";
+import { navigationRoutes } from "./routes-constants";
+import Home from "@pages/Home/home";
+import Register from "@pages/Auth/register";
 //Lazy loading
-const Login = lazy(() => import('@pages/Auth/login'));
+const Login = lazy(() => import("@pages/Auth/login"));
 // const Login = lazy(() => import('../pages/Auth/login'));
 
 //Common routes
@@ -20,6 +21,10 @@ const openRoutes = [
   {
     path: navigationRoutes.login,
     element: <Login />,
+  },
+  {
+    path: navigationRoutes.signup,
+    element: <Register />,
   },
 ];
 

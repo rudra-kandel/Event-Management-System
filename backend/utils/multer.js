@@ -21,9 +21,10 @@ module.exports = multer({
   storage,
   limits: { fileSize: 3145728 }, // 3MB
   fileFilter: function (req, file, cb) {
+    console.log("abc");
     console.log(file.fieldname);
     // if uploading images
-    if (file.fieldname === "imageaasas" || file.fieldname === "event_pic") {
+    if (file.fieldname === "image" || file.fieldname === "event_pic") {
       const allowedExtensions = /jpg|jpeg|jfif|png|svg|webp/;
       const validateExt = allowedExtensions.test(
         path.extname(file.originalname).toLowerCase()
